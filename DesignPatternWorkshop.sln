@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignPatternWorkshop", "DesignPatternWorkshop\DesignPatternWorkshop.csproj", "{F9433C18-C2B8-448F-A170-9990E996E312}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{D62E5FF3-9A14-4907-AD78-DBF4F184398C}"
+	ProjectSection(SolutionItems) = preProject
+		Workshop_full_C#.md = Workshop_full_C#.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
