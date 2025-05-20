@@ -8,12 +8,15 @@ using DesignPatternWorkshop.Factory.petrol;
 using DesignPatternWorkshop.FactoryMethod.cash;
 using DesignPatternWorkshop.FactoryMethod.credit;
 using DesignPatternWorkshop.Singleton;
+using DesignPatternWorkshop.Strategy;
+using DesignPatternWorkshop.Strategy.strategies;
 
 Factory();
 Builder();
 FactoryMethod();
 Decorator();
 Singleton();
+Strategy();
 return;
 
 void Title(string title) { Console.WriteLine($"-------------------- {title} --------------------"); }
@@ -84,4 +87,13 @@ void Singleton()
     
     papers.Show();
     Spacer();
+}
+
+void Strategy()
+{
+    Title("Strategy");
+    SubTitle("Affichage : Un véhicule par lignes");
+    new CatalogView(new OneVehiclePerLineStrategy()).Draw();
+    SubTitle("Affichage : Trois véhicules par lignes");
+    new CatalogView(new ThreeVehiclesPerLineStrategy()).Draw();
 }
