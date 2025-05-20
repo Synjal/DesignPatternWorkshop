@@ -3,20 +3,20 @@ using DesignPatternWorkshop.Builder;
 using DesignPatternWorkshop.Factory;
 using DesignPatternWorkshop.Factory.electric;
 using DesignPatternWorkshop.Factory.petrol;
+using DesignPatternWorkshop.FactoryMethod;
+using DesignPatternWorkshop.FactoryMethod.cash;
+using DesignPatternWorkshop.FactoryMethod.credit;
 
 // -------------------- Factory --------------------
 VehicleFactory electricFactory = new ElectricVehicleFactory();
 VehicleFactory petrolFactory = new PetrolVehicleFactory();
 
-var electricCatalog = new Catalog(electricFactory);
-var petrolCatalog = new Catalog(petrolFactory);
-
 Title("Factory");
 SubTitle("Véhicules électriques");
-electricCatalog.ShowProducts();
+new Catalog(electricFactory).ShowProducts();
 Spacer();
 SubTitle("Véhicules essence");
-petrolCatalog.ShowProducts();
+new Catalog(petrolFactory).ShowProducts();
 Spacer();
 Spacer();
 
@@ -28,8 +28,18 @@ Spacer();
 SubTitle("Client PDF");
 _ = new VehicleClient(FileFormat.Pdf);
 Spacer();
+
+// -------------------- Factory Method --------------------
+Title("Factory Method");
+SubTitle("Client comptant");
+new CashClient().NewOrder();
+Spacer();
+new CreditClient().NewOrder();
+Spacer();
+
+
 return;
 
 void Title(string title) { Console.WriteLine($"-------------------- {title} --------------------"); }
 void SubTitle(string title) { Console.WriteLine($"-------- {title} --------"); }
-void Spacer() { Console.WriteLine(""); }
+void Spacer() { Console.WriteLine(); }
