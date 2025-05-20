@@ -7,11 +7,13 @@ using DesignPatternWorkshop.Factory.electric;
 using DesignPatternWorkshop.Factory.petrol;
 using DesignPatternWorkshop.FactoryMethod.cash;
 using DesignPatternWorkshop.FactoryMethod.credit;
+using DesignPatternWorkshop.Singleton;
 
 Factory();
 Builder();
 FactoryMethod();
 Decorator();
+Singleton();
 return;
 
 void Title(string title) { Console.WriteLine($"-------------------- {title} --------------------"); }
@@ -64,5 +66,22 @@ void Decorator()
         );
     
     decoratedVehicle.Show();
+    Spacer();
+}
+
+void Singleton()
+{
+    Title("Singleton");
+    SubTitle("Ajout du bon de commande et de l'immatriculation");
+    BlankPapers papers = BlankPapers.Instance();
+    papers.Add("Bon de commande vierge");
+    papers.Add("Demande d'immatriculation vierge");
+    papers.Show();
+
+    SubTitle("Retrait du bon de commande dans un autre objet");
+    var otherRef = BlankPapers.Instance();
+    otherRef.Remove("Bon de commande vierge");
+    
+    papers.Show();
     Spacer();
 }
