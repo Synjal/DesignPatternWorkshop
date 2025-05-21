@@ -1,6 +1,10 @@
-﻿namespace DesignPatternWorkshop.Factory;
+﻿using System.Runtime.CompilerServices;
 
-public abstract class Car
+namespace DesignPatternWorkshop.Factory;
+
+public abstract class Car : IVehicle
 {
+    public abstract double MaintenanceCost { get; }
+
     public abstract void GetTypeDescription();
 }

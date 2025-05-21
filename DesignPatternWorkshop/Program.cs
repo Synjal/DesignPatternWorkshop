@@ -1,5 +1,8 @@
 ﻿using DesignPatternWorkshop;
+using DesignPatternWorkshop.Bridge.countries;
+using DesignPatternWorkshop.Bridge.formats;
 using DesignPatternWorkshop.Builder;
+using DesignPatternWorkshop.Composite;
 using DesignPatternWorkshop.Decorator;
 using DesignPatternWorkshop.Decorator.decorations;
 using DesignPatternWorkshop.Factory;
@@ -17,10 +20,12 @@ FactoryMethod();
 Decorator();
 Singleton();
 Strategy();
+//Bridge(); Require user inputs
+Composite();
 return;
 
 void Title(string title) { Console.WriteLine($"-------------------- {title} --------------------"); }
-void SubTitle(string title) { Console.WriteLine($"-------- {title} --------"); }
+void SubTitle(string subtitle) { Console.WriteLine($"-------- {subtitle} --------"); }
 void Spacer() { Console.WriteLine(); }
 
 void Factory()
@@ -96,4 +101,48 @@ void Strategy()
     new CatalogView(new OneVehiclePerLineStrategy()).Draw();
     SubTitle("Affichage : Trois véhicules par lignes");
     new CatalogView(new ThreeVehiclesPerLineStrategy()).Draw();
+    Spacer();
+}
+
+void Bridge()
+{
+    var htmlForm = new FranceRegistrationForm(new HtmlFormImpl());
+    var appleForm = new LuxembourgRegistrationForm(new AppleFormImpl());
+    
+    Title("Bridge");
+    
+    SubTitle("HTML France");
+    htmlForm.Display();
+    htmlForm.ManageInput();
+    if (htmlForm.ValidateInput()) htmlForm.GenerateDocument();
+    else Console.WriteLine("Plaque non valide.");
+    Spacer();
+    
+    SubTitle("Apple Luxembourg");
+    appleForm.Display();
+    appleForm.ManageInput();
+    if (appleForm.ValidateInput()) appleForm.GenerateDocument();
+    else Console.WriteLine("Plaque non valide");
+    Spacer();
+}
+
+void Composite()
+{
+    var company1 = new SimpleCompany();
+    var company2 = new SimpleCompany();
+    var holding = new ParentCompany();
+    
+    company1.AddVehicle(new ElectricCar(), new ElectricMotorcycle());
+    company1.AddSubsidiary();
+    company2.AddVehicle(new PetrolCar(), new PetrolMotorcycle());
+    holding.AddSubsidiary(company1, company2);
+    holding.AddVehicle(new ElectricCar());
+    
+    Title("Composite");
+    SubTitle("Société sans filiales : véhicules électriques");
+    Console.WriteLine($"Coût de l'entretien : {company1.MaintenanceCost()}€");
+    SubTitle("Société sans filiales : véhicules à essence");
+    Console.WriteLine($"Coût de l'entretien : {company2.MaintenanceCost()}€");
+    SubTitle("Société mère avec une voiture électrique en plus");
+    Console.WriteLine($"Coût total d'entretien : {holding.MaintenanceCost()}€");
 }
