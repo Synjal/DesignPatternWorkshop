@@ -1,11 +1,13 @@
-﻿namespace DesignPatternWorkshop.Singleton;
+﻿using DesignPatternWorkshop.Prototype;
+
+namespace DesignPatternWorkshop.Singleton;
 
 public class BlankPapers
 {
     private static BlankPapers? _instance;
     private static readonly Lock Lock = new();
     
-    private readonly List<string> _documents = [];
+    private readonly List<IDocument> _documents = [];
     
     private BlankPapers() {}
 
@@ -22,17 +24,23 @@ public class BlankPapers
         }
     }
 
-    public void Add(string document)
+    public void Add(params IDocument[] document)
     {
-        _documents.Add(document);
+        foreach (var doc in document)
+        {
+            _documents.Add(doc);
+        }
     }
 
-    public void Remove(string document)
+    public void Remove(params IDocument[] document)
     {
-        _documents.Remove(document);
-    }
+        foreach (var doc in document)
+        {
+            _documents.Remove(doc);
+        }
+    } 
 
-    public void Show()
+    public void Print()
     {
         Console.WriteLine("Liasse vierge :");
         foreach (var doc in _documents)
@@ -40,4 +48,8 @@ public class BlankPapers
             Console.WriteLine("- " + doc);
         }
     }
+
+    public void Clear() => _documents.Clear();
+    
+    public IReadOnlyList<IDocument> Documents => _documents;
 }

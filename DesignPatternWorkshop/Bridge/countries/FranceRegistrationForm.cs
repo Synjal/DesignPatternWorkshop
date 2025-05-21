@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DesignPatternWorkshop.Prototype.documents;
 
 namespace DesignPatternWorkshop.Bridge.countries;
 

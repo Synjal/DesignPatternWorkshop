@@ -1,4 +1,5 @@
 ﻿using DesignPatternWorkshop;
+using DesignPatternWorkshop.Adapter;
 using DesignPatternWorkshop.Bridge.countries;
 using DesignPatternWorkshop.Bridge.formats;
 using DesignPatternWorkshop.Builder;
@@ -10,6 +11,8 @@ using DesignPatternWorkshop.Factory.electric;
 using DesignPatternWorkshop.Factory.petrol;
 using DesignPatternWorkshop.FactoryMethod.cash;
 using DesignPatternWorkshop.FactoryMethod.credit;
+using DesignPatternWorkshop.Prototype;
+using DesignPatternWorkshop.Prototype.documents;
 using DesignPatternWorkshop.Singleton;
 using DesignPatternWorkshop.Strategy;
 using DesignPatternWorkshop.Strategy.strategies;
@@ -22,6 +25,8 @@ Singleton();
 Strategy();
 //Bridge(); Require user inputs
 Composite();
+Prototype();
+Adapter();
 return;
 
 void Title(string title) { Console.WriteLine($"-------------------- {title} --------------------"); }
@@ -39,7 +44,6 @@ void Factory()
     Spacer();
     SubTitle("Véhicules essence");
     new Catalog(petrolFactory).ShowProducts();
-    Spacer();
     Spacer();
 }
 
@@ -79,18 +83,20 @@ void Decorator()
 
 void Singleton()
 {
+    IDocument commandOrder = new PurchaseOrder();
     Title("Singleton");
     SubTitle("Ajout du bon de commande et de l'immatriculation");
     BlankPapers papers = BlankPapers.Instance();
-    papers.Add("Bon de commande vierge");
-    papers.Add("Demande d'immatriculation vierge");
-    papers.Show();
+    papers.Add(commandOrder);
+    papers.Add(new RegistrationOrder());
+    papers.Print();
 
     SubTitle("Retrait du bon de commande dans un autre objet");
     var otherRef = BlankPapers.Instance();
-    otherRef.Remove("Bon de commande vierge");
+    otherRef.Remove(commandOrder);
     
-    papers.Show();
+    papers.Print();
+    papers.Clear();
     Spacer();
 }
 
@@ -99,6 +105,7 @@ void Strategy()
     Title("Strategy");
     SubTitle("Affichage : Un véhicule par lignes");
     new CatalogView(new OneVehiclePerLineStrategy()).Draw();
+    Spacer();
     SubTitle("Affichage : Trois véhicules par lignes");
     new CatalogView(new ThreeVehiclesPerLineStrategy()).Draw();
     Spacer();
@@ -141,8 +148,45 @@ void Composite()
     Title("Composite");
     SubTitle("Société sans filiales : véhicules électriques");
     Console.WriteLine($"Coût de l'entretien : {company1.MaintenanceCost()}€");
+    Spacer();
     SubTitle("Société sans filiales : véhicules à essence");
     Console.WriteLine($"Coût de l'entretien : {company2.MaintenanceCost()}€");
+    Spacer();
     SubTitle("Société mère avec une voiture électrique en plus");
     Console.WriteLine($"Coût total d'entretien : {holding.MaintenanceCost()}€");
+    
+    Spacer();
+}
+
+void Prototype()
+{
+    BlankPapers.Instance().Add(new PurchaseOrder(), new RegistrationOrder(), new CertificateTransferOrder());
+    var clientPapers = new ClientPapers("M. John Doe - 21/05/2025");
+    
+    Title("Prototype");
+    SubTitle("Affichage des documents");
+    clientPapers.Show();
+    Spacer();
+    SubTitle("Impression des documents");
+    clientPapers.Print();
+    Spacer();
+}
+
+void Adapter()
+{
+    var html = new HtmlDocument();
+    var pdf = new PdfDocument();
+    
+    Title("Adapter");
+    SubTitle("Affichage HTML");
+    html.Fill("Contenu HTML");
+    html.Show();
+    html.Print();
+    Spacer();
+    
+    SubTitle("Affichage PDF");
+    pdf.Fill("Contenu PDF");
+    pdf.Show();
+    pdf.Print();
+    Spacer();
 }

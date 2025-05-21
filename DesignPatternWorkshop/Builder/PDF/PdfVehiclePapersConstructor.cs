@@ -1,4 +1,6 @@
-﻿namespace DesignPatternWorkshop.Builder.PDF;
+﻿using DesignPatternWorkshop.Prototype.documents;
+
+namespace DesignPatternWorkshop.Builder.PDF;
 
 public class PdfVehiclePapersConstructor : VehiclePapersConstructor
 {
@@ -6,12 +8,12 @@ public class PdfVehiclePapersConstructor : VehiclePapersConstructor
     
     public override void BuildPurchaseOrder()
     {
-        _papers.AddDocument("Bon de commande (PDF)");
+        _papers.AddDocument(new PurchaseOrder());
     }
 
     public override void BuildRegistrationApplication()
     {
-        _papers.AddDocument("Demande d'immatriculation (PDF)");
+        _papers.AddDocument(new PurchaseOrder());
     }
 
     public override Papers Result()

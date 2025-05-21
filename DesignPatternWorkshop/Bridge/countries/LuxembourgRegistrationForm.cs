@@ -1,4 +1,6 @@
-﻿namespace DesignPatternWorkshop.Bridge.countries;
+﻿using DesignPatternWorkshop.Prototype.documents;
+
+namespace DesignPatternWorkshop.Bridge.countries;
 
 public class LuxembourgRegistrationForm(IFormImpl impl) : RegistrationForm(impl)
 {

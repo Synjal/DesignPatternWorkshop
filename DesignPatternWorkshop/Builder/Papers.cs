@@ -1,10 +1,12 @@
-﻿namespace DesignPatternWorkshop.Builder;
+﻿using DesignPatternWorkshop.Prototype;
+
+namespace DesignPatternWorkshop.Builder;
 
 public abstract class Papers
 {
-    protected List<string> Documents = new List<string>();
+    protected readonly List<IDocument> Documents = [];
 
-    public void AddDocument(string document)
+    public void AddDocument(IDocument document)
     {
         Documents.Add(document);
     }

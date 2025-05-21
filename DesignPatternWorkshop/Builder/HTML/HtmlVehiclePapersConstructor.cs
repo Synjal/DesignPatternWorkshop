@@ -1,4 +1,6 @@
-﻿namespace DesignPatternWorkshop.Builder.HTML;
+﻿using DesignPatternWorkshop.Prototype.documents;
+
+namespace DesignPatternWorkshop.Builder.HTML;
 
 public class HtmlVehiclePapersConstructor : VehiclePapersConstructor
 {
@@ -6,12 +8,12 @@ public class HtmlVehiclePapersConstructor : VehiclePapersConstructor
 
     public override void BuildPurchaseOrder()
     {
-        _papers.AddDocument("Bon de commande (HTML)");
+        _papers.AddDocument(new PurchaseOrder());
     }
 
     public override void BuildRegistrationApplication()
     {
-        _papers.AddDocument("Demande d'immatriculation (HTML)");
+        _papers.AddDocument(new PurchaseOrder());
     }
 
     public override Papers Result()
