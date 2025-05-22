@@ -3,6 +3,7 @@ using DesignPatternWorkshop.Adapter;
 using DesignPatternWorkshop.Bridge.countries;
 using DesignPatternWorkshop.Bridge.formats;
 using DesignPatternWorkshop.Builder;
+using DesignPatternWorkshop.Chain_Of_Responsibility.objects;
 using DesignPatternWorkshop.Composite;
 using DesignPatternWorkshop.Decorator;
 using DesignPatternWorkshop.Decorator.decorations;
@@ -13,6 +14,7 @@ using DesignPatternWorkshop.Factory.electric;
 using DesignPatternWorkshop.Factory.petrol;
 using DesignPatternWorkshop.FactoryMethod.cash;
 using DesignPatternWorkshop.FactoryMethod.credit;
+using DesignPatternWorkshop.Flyweight;
 using DesignPatternWorkshop.Prototype;
 using DesignPatternWorkshop.Prototype.documents;
 using DesignPatternWorkshop.Proxy;
@@ -34,6 +36,8 @@ Prototype();
 Adapter();
 Facade();
 Proxy();
+Flyweight();
+ChainOfResponsibility();
 return;
 
 void Title(string title) { Console.WriteLine($"-------------------- {title} --------------------"); }
@@ -246,4 +250,34 @@ void Proxy()
     SubTitle("Deuxième clique");
     view.ClickOnAnimation();
     Spacer();
+}
+
+void Flyweight()
+{
+    var fabric = new OptionFabric();
+
+    var optionGps = fabric.GetOption("GPS");
+    var optionClimatisation = fabric.GetOption("Climatisation");
+    var optionGps2 = fabric.GetOption("GPS");
+
+    var car = new VehicleOrder();
+    car.AddOption(optionGps, 1200);
+    car.AddOption(optionClimatisation, 800);
+    car.AddOption(optionGps2, 1250);
+    
+    Title("Flyweight");
+    car.ShowOptions();
+}
+
+void ChainOfResponsibility()
+{
+    var vehicle = new ElectricCar(testCarBrand, 1000);
+    var model = new Model();
+    var brand = new Brand();
+    
+    vehicle.SetNext(model);
+    model.SetNext(brand);
+    
+    Title("Chain Of Responsibility");
+    Console.WriteLine(vehicle.GiveDescription());
 }
