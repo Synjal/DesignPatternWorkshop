@@ -13,7 +13,7 @@ public class PdfVehiclePapersConstructor : VehiclePapersConstructor
 
     public override void BuildRegistrationApplication()
     {
-        _papers.AddDocument(new PurchaseOrder());
+        _papers.AddDocument(new RegistrationOrder());
     }
 
     public override Papers Result()

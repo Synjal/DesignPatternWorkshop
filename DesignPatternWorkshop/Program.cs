@@ -6,6 +6,8 @@ using DesignPatternWorkshop.Builder;
 using DesignPatternWorkshop.Composite;
 using DesignPatternWorkshop.Decorator;
 using DesignPatternWorkshop.Decorator.decorations;
+using DesignPatternWorkshop.Facade;
+using DesignPatternWorkshop.Facade.components;
 using DesignPatternWorkshop.Factory;
 using DesignPatternWorkshop.Factory.electric;
 using DesignPatternWorkshop.Factory.petrol;
@@ -13,9 +15,12 @@ using DesignPatternWorkshop.FactoryMethod.cash;
 using DesignPatternWorkshop.FactoryMethod.credit;
 using DesignPatternWorkshop.Prototype;
 using DesignPatternWorkshop.Prototype.documents;
+using DesignPatternWorkshop.Proxy;
 using DesignPatternWorkshop.Singleton;
 using DesignPatternWorkshop.Strategy;
 using DesignPatternWorkshop.Strategy.strategies;
+
+const string testCarBrand = "Toyota";
 
 Factory();
 Builder();
@@ -27,6 +32,8 @@ Strategy();
 Composite();
 Prototype();
 Adapter();
+Facade();
+Proxy();
 return;
 
 void Title(string title) { Console.WriteLine($"-------------------- {title} --------------------"); }
@@ -35,15 +42,15 @@ void Spacer() { Console.WriteLine(); }
 
 void Factory()
 {
-    VehicleFactory electricFactory = new ElectricVehicleFactory();
-    VehicleFactory petrolFactory = new PetrolVehicleFactory();
+    VehicleFactory electricFactory = new ElectricVehicleFactory(testCarBrand, 12000);
+    VehicleFactory petrolFactory = new PetrolVehicleFactory(testCarBrand, 16500);
 
     Title("Factory");
     SubTitle("Véhicules électriques");
-    new Catalog(electricFactory).ShowProducts();
+    new Catalog().ShowProducts(electricFactory);
     Spacer();
     SubTitle("Véhicules essence");
-    new Catalog(petrolFactory).ShowProducts();
+    new Catalog().ShowProducts(petrolFactory);
     Spacer();
 }
 
@@ -74,7 +81,7 @@ void Decorator()
     Title("Decorator");
     VehicleGraphicalComponent decoratedVehicle =
         new BrandDecorator(
-            new ModelDecorator(new VehicleView())
+            new ModelDecorator(new VehicleView(new AnimationProxy()))
         );
     
     decoratedVehicle.Show();
@@ -86,7 +93,7 @@ void Singleton()
     IDocument commandOrder = new PurchaseOrder();
     Title("Singleton");
     SubTitle("Ajout du bon de commande et de l'immatriculation");
-    BlankPapers papers = BlankPapers.Instance();
+    var papers = BlankPapers.Instance();
     papers.Add(commandOrder);
     papers.Add(new RegistrationOrder());
     papers.Print();
@@ -139,11 +146,11 @@ void Composite()
     var company2 = new SimpleCompany();
     var holding = new ParentCompany();
     
-    company1.AddVehicle(new ElectricCar(), new ElectricMotorcycle());
+    company1.AddVehicle(new ElectricCar(testCarBrand, 65000), new ElectricMotorcycle("Peugeot", 12500));
     company1.AddSubsidiary();
-    company2.AddVehicle(new PetrolCar(), new PetrolMotorcycle());
+    company2.AddVehicle(new PetrolCar("Renault", 2500), new PetrolMotorcycle("Renault", 14750));
     holding.AddSubsidiary(company1, company2);
-    holding.AddVehicle(new ElectricCar());
+    holding.AddVehicle(new ElectricCar("Tesla", 55000));
     
     Title("Composite");
     SubTitle("Société sans filiales : véhicules électriques");
@@ -188,5 +195,55 @@ void Adapter()
     pdf.Fill("Contenu PDF");
     pdf.Show();
     pdf.Print();
+    Spacer();
+}
+
+void Facade()
+{
+    var facade = new AutoWebService();
+    var filteredVehicle = facade.SearchVehicles(15000, 5000);
+    
+    Title("Facade");
+    SubTitle("Catalogue");
+    foreach (var vehicle in filteredVehicle)
+    {
+        Console.WriteLine($"Marque : {vehicle.Brand}");
+        Console.WriteLine($"Prix : {vehicle.Price}");
+        Console.WriteLine($"Coût d'entretien : {vehicle.MaintenanceCost}");
+        Spacer();
+    }
+    Spacer();
+    
+    SubTitle("Reprise véhicule");
+    Console.WriteLine(facade.IsEligibleForRecovery(new ElectricCar(testCarBrand, 2500)) 
+        ? "Eligible à la reprise" 
+        : "Non éligible à la reprise");
+    Spacer();
+    
+    SubTitle("Gestion des documents");
+    foreach (var vehicle in filteredVehicle)
+    {
+        foreach (var doc in facade.GenerateClientPapers(vehicle.Brand + " - Client A"))
+        {
+            doc.Print();
+        } 
+        Spacer();
+    }
+    Spacer();
+
+}
+
+void Proxy()
+{
+    var view = new VehicleView(new AnimationProxy());
+    
+    Title("Proxy");
+    SubTitle("Premier clique");
+    view.Show();
+    view.ClickOnAnimation();
+    Spacer();
+    
+    SubTitle("Deuxième clique");
+    view.ClickOnAnimation();
     Spacer();
 }

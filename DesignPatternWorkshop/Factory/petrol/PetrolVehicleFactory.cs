@@ -1,7 +1,7 @@
 ﻿namespace DesignPatternWorkshop.Factory.petrol;
 
-public class PetrolVehicleFactory : VehicleFactory
+public class PetrolVehicleFactory(string brand, double price) : VehicleFactory
 {
-    public override Motorcycle CreateMotorcycle() => new PetrolMotorcycle();
-    public override Car CreateCar() => new PetrolCar();
+    public override Motorcycle CreateMotorcycle() => new PetrolMotorcycle(brand, price);
+    public override Car CreateCar() => new PetrolCar(brand, price);
 }

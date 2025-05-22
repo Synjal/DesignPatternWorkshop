@@ -4,10 +4,10 @@ namespace DesignPatternWorkshop.Composite;
 
 public abstract class Company
 {
-    protected readonly List<IVehicle> Vehicles = [];
+    protected readonly List<Vehicle> Vehicles = [];
     protected readonly List<Company> Subsidiaries = [];
 
-    public virtual void AddVehicle(params IVehicle[] vehicles)
+    public virtual void AddVehicle(params Vehicle[] vehicles)
     {
         foreach (var vehicle in vehicles) Vehicles.Add(vehicle);
     }

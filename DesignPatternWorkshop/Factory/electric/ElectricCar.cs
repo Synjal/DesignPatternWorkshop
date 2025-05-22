@@ -1,11 +1,7 @@
-﻿using System.Runtime.CompilerServices;
+﻿namespace DesignPatternWorkshop.Factory.electric;
 
-namespace DesignPatternWorkshop.Factory.electric;
-
-public class ElectricCar: Car
+public class ElectricCar(string brand, double price): Car(brand, price)
 {
-    public override double MaintenanceCost => 100;
-
     public override void GetTypeDescription()
     {
         Console.WriteLine("Voiture électrique");

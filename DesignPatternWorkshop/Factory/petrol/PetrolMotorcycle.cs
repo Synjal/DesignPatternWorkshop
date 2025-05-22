@@ -1,8 +1,7 @@
 ﻿namespace DesignPatternWorkshop.Factory.petrol;
 
-public class PetrolMotorcycle : Motorcycle
+public class PetrolMotorcycle(string brand, double price): Motorcycle(brand, price)
 {
-    public override double MaintenanceCost => 90;
     public override void GetTypeDescription()
     {
         Console.WriteLine("Scooter à essence");

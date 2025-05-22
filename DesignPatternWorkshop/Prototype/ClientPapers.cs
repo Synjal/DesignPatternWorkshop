@@ -22,6 +22,11 @@ public class ClientPapers
         foreach (var doc in _documents) doc.Show();
     }
 
+    public List<IDocument> getDocuments()
+    {
+        return _documents;
+    }
+
     public void Print()
     {
         foreach (var doc in _documents) doc.Print();

@@ -2,9 +2,4 @@
 
 namespace DesignPatternWorkshop.Factory;
 
-public abstract class Car : IVehicle
-{
-    public abstract double MaintenanceCost { get; }
-
-    public abstract void GetTypeDescription();
-}
+public abstract class Car(string brand, double price) : Vehicle(brand, price);

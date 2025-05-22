@@ -1,9 +1,16 @@
-﻿namespace DesignPatternWorkshop.Decorator;
+﻿using DesignPatternWorkshop.Proxy;
 
-public class VehicleView : VehicleGraphicalComponent
+namespace DesignPatternWorkshop.Decorator;
+
+public class VehicleView(Animation animation) : VehicleGraphicalComponent
 {
     public override void Show()
     {
         Console.WriteLine("Vue du véhicule");
+    }
+
+    public void ClickOnAnimation()
+    {
+        animation.Clic();
     }
 }
