@@ -1,4 +1,5 @@
-﻿using DesignPatternWorkshop.Factory;
+﻿using DesignPatternWorkshop.Command;
+using DesignPatternWorkshop.Factory;
 using DesignPatternWorkshop.Factory.electric;
 using DesignPatternWorkshop.Factory.petrol;
 
@@ -6,6 +7,7 @@ namespace DesignPatternWorkshop.Facade.components;
 
 public class Catalog
 {
+    private OrderSettle? _lastOrder;
     private readonly List<Vehicle> _availableVehicles =
     [
         new ElectricCar("Peugeot 208", 16000),
@@ -28,5 +30,21 @@ public class Catalog
         return _availableVehicles
             .Where(v => Math.Abs(v.Price - averagePrice) <= gapMax)
             .ToList();
+    }
+
+    public void LaunchOrderSettle(OrderSettle order)
+    {
+        _lastOrder = order;
+        order.Settle(VehicleRepository.GetAll());
+    }
+
+    public void CancelOrderSettle()
+    {
+        _lastOrder?.Cancel();
+    }
+
+    public void RestoreOrderSettle()
+    {
+        _lastOrder?.Restore();
     }
 }

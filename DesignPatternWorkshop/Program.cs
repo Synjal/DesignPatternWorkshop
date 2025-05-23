@@ -4,6 +4,7 @@ using DesignPatternWorkshop.Bridge.countries;
 using DesignPatternWorkshop.Bridge.formats;
 using DesignPatternWorkshop.Builder;
 using DesignPatternWorkshop.Chain_Of_Responsibility.objects;
+using DesignPatternWorkshop.Command;
 using DesignPatternWorkshop.Composite;
 using DesignPatternWorkshop.Decorator;
 using DesignPatternWorkshop.Decorator.decorations;
@@ -38,6 +39,7 @@ Facade();
 Proxy();
 Flyweight();
 ChainOfResponsibility();
+Command();
 return;
 
 void Title(string title) { Console.WriteLine($"-------------------- {title} --------------------"); }
@@ -280,4 +282,24 @@ void ChainOfResponsibility()
     
     Title("Chain Of Responsibility");
     Console.WriteLine(vehicle.GiveDescription());
+    Spacer();
+}
+
+void Command()
+{
+    var command = new OrderSettle(0, 50);
+    var catalog = new Catalog();
+    
+    Title("Command");
+    SubTitle("Nouvelle promotion");
+    catalog.LaunchOrderSettle(command);
+    Spacer();
+    
+    SubTitle("Annulation de la promotion");
+    catalog.CancelOrderSettle();
+    Spacer();
+    
+    SubTitle("Restoration de la promotion");
+    catalog.RestoreOrderSettle();
+    Spacer();
 }

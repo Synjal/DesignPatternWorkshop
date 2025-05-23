@@ -6,4 +6,5 @@ public class ElectricCar(string brand, double price): Car(brand, price)
     {
         Console.WriteLine("Voiture électrique");
     }
+    
 }
