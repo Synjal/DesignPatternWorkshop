@@ -6,4 +6,9 @@ public class ElectricMotorcycle(string brand, double price): Motorcycle(brand, p
     {
         Console.WriteLine("Scooter électrique");
     }
+    
+    protected override string GetDescription()
+    {
+        return "Description du scooter électrique";
+    }
 }

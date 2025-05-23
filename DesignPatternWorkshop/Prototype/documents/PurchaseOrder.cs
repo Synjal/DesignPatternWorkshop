@@ -12,4 +12,9 @@ public class PurchaseOrder : Document
     {
         Console.WriteLine("Bon de commande : " + Content);
     }
+
+    public override string ToString()
+    {
+        return "Bon de commande";
+    }
 }

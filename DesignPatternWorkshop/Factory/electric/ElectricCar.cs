@@ -6,5 +6,8 @@ public class ElectricCar(string brand, double price): Car(brand, price)
     {
         Console.WriteLine("Voiture électrique");
     }
-    
+    protected override string GetDescription()
+    {
+        return "Description de la voiture électrique";
+    }
 }

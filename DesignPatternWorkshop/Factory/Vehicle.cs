@@ -23,7 +23,7 @@ public abstract class Vehicle(string brand, double price) : BaseObject
 
     public void UpdatePrice(double coefficient, int storageTime)
     {
-        Console.WriteLine($"Le véhicule {this} vendu à {Price}€ est présent depuis plus de {storageTime} jours.");
+        Console.WriteLine($"Le véhicule {this} est présent depuis plus de {storageTime} jours.");
         Price *= coefficient / 100;
         Console.WriteLine($"Application d'une promotion de {coefficient}%...");
         Console.WriteLine($"Nouveau prix de vente : {Price}€");
@@ -32,7 +32,7 @@ public abstract class Vehicle(string brand, double price) : BaseObject
 
     public void SetPrice(double newPrice)
     {
-        Console.WriteLine($"Annulation de la promotion du véhicule {this} en vente à {Price}€");
+        Console.WriteLine($"Annulation de la promotion du véhicule {this}");
         Price = newPrice;
         Console.WriteLine($"Nouveau prix de vente : {Price}€");
         Console.WriteLine("---");
@@ -40,6 +40,6 @@ public abstract class Vehicle(string brand, double price) : BaseObject
 
     public override string ToString()
     {
-        return $"{StockEntryDate.ToShortDateString()} - {Brand}";
+        return $"[{Brand}]{StockEntryDate.ToShortDateString()} - {GetDescription()} - {Price}€";
     }
 }

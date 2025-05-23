@@ -16,6 +16,8 @@ using DesignPatternWorkshop.Factory.petrol;
 using DesignPatternWorkshop.FactoryMethod.cash;
 using DesignPatternWorkshop.FactoryMethod.credit;
 using DesignPatternWorkshop.Flyweight;
+using DesignPatternWorkshop.Interpretor;
+using DesignPatternWorkshop.Interpretor.operators;
 using DesignPatternWorkshop.Prototype;
 using DesignPatternWorkshop.Prototype.documents;
 using DesignPatternWorkshop.Proxy;
@@ -40,6 +42,7 @@ Proxy();
 Flyweight();
 ChainOfResponsibility();
 Command();
+Interpretor();
 return;
 
 void Title(string title) { Console.WriteLine($"-------------------- {title} --------------------"); }
@@ -301,5 +304,41 @@ void Command()
     
     SubTitle("Restoration de la promotion");
     catalog.RestoreOrderSettle();
+    Spacer();
+}
+
+void Interpretor()
+{
+    var expression = new AndOperator(
+        new AndOperator(
+            new OrOperator(
+                new Keyword("rouge"),
+                new Keyword("bleu")
+            ),
+            new Keyword("essence")
+        ),
+        new Keyword("récent")
+    );
+    var result = expression.Evaluate(VehicleRepository.GetAll());
+    
+    Title("Interpretor");
+    SubTitle("Recherche sur '(rouge ou bleu) et essence et récent'");
+    
+    if (result.Count == 0) Console.WriteLine("Aucun élément ne correspond à vos critères de recherche");
+    foreach (var vehicle in result)
+    {
+        Console.WriteLine(vehicle);
+    }
+    Spacer();
+    
+    SubTitle("Recherche sur 'essence'");
+    var expression2 = new Keyword("essence");
+    result = expression2.Evaluate(VehicleRepository.GetAll());
+    
+    if (result.Count == 0) Console.WriteLine("Aucun élément ne correspond à vos critères de recherche");
+    foreach (var vehicle in result)
+    {
+        Console.WriteLine(vehicle);
+    }
     Spacer();
 }

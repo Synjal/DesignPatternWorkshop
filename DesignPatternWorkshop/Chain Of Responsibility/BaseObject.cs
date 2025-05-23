@@ -11,7 +11,7 @@ public abstract class BaseObject
 
     public void SetNext(BaseObject next)
     {
-        this.Next = next;
+        Next = next;
     }
     protected abstract string? GetDescription();
 

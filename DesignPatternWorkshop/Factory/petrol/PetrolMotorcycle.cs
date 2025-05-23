@@ -6,4 +6,9 @@ public class PetrolMotorcycle(string brand, double price): Motorcycle(brand, pri
     {
         Console.WriteLine("Scooter à essence");
     }
+    
+    protected override string GetDescription()
+    {
+        return "Description du scooter à essence";
+    }
 }

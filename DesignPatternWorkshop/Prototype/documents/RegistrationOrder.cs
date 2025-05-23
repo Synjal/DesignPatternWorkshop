@@ -12,4 +12,9 @@ public class RegistrationOrder : Document
     {
         Console.WriteLine("Demande d'immatriculation : " + Content);
     }
+
+    public override string ToString()
+    {
+        return "Demande d'immatriculation";
+    }
 }

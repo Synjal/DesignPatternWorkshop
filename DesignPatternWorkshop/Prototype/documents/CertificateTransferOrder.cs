@@ -12,5 +12,9 @@ public class CertificateTransferOrder: Document
     {
         Console.WriteLine("Demande de cession de certificat : " + Content);
     }
-    
+
+    public override string ToString()
+    {
+        return "Certificat de transfert";
+    }
 }
